@@ -1,0 +1,115 @@
+/*paleta de colores */
+:root {
+    /* Fondos */
+    --color-bg: #0B0D10;
+    --color-bg-secondary: #12161B;
+    --color-surface: #1A1F26;
+
+    /* Colores principales */
+    --color-primary: #E10600;        
+    --color-primary-dark: #A80400;
+    --color-primary-light: #FF2A23;
+
+    /* Color secundario */
+    --color-secondary: #FFB000;      
+
+    /* Texto */
+    --color-text: #F2F2F2;
+    --color-text-secondary: #A7ADB5;
+    --color-text-muted: #6F7780;
+
+    /* Bordes */
+    --color-border: #2A3038;
+
+    /* Estados */
+    --color-success: #19C37D;
+    --color-warning: #FFB000;
+    --color-error: #E10600;
+
+    /* Otros */
+    --color-white: #FFFFFF;
+    --color-black: #000000;
+}
+/* =========================
+   CONFIGURACIÓN GENERAL
+   ========================= */
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+
+
+/* =========================
+   BARRA PROMOCIONAL
+   ========================= */
+
+.promo-bar {
+    background-color: #111;
+    color: white;
+    font-size: 14px;
+}
+
+
+/* =========================
+   NAVBAR
+   ========================= */
+
+.navbar-brand {
+    letter-spacing: 1px;
+}
+
+
+/* =========================
+   HERO
+   ========================= */
+
+.hero {
+    min-height: 75vh;
+
+    background-image: url("../img/wallpaper.avif");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    display: flex;
+    align-items: center;
+    color: var(--color-text-muted) 
+    
+}
+
+
+.hero-subtitle {
+    font-size: 14px;
+    font-weight: bold;
+    letter-spacing: 3px;
+    
+    margin-bottom: 20px;
+    -webkit-text-stroke: 1px var(--color-surface);
+}
+
+
+.hero h1 {
+    line-height: 1.05;
+    -webkit-text-stroke: 3px var(--color-surface);
+}
+
+
+.hero p.lead {
+    max-width: 650px;
+    -webkit-text-stroke: 0.5px var(--color-surface);
+}
+
+
+/* =========================
+   CARDS
+   ========================= */
+
+.card {
+    transition: transform 0.2s ease;
+}
+
+
+.card:hover {
+    transform: translateY(-5px);
+}
