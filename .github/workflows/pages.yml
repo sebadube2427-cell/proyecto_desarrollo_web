@@ -1,0 +1,58 @@
+name: Deploy pagina web
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+jobs:
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - name: Descargar repositorio
+        uses: actions/checkout@v4
+
+      - name: Configurar GitHub Pages
+        uses: actions/configure-pages@v5
+
+      - name: Preparar pagina
+        run: |
+          mkdir _site
+          cp -r pagina_web/* _site/
+
+      - name: Crear index principal
+        run: |
+          cat > _site/index.html <<'EOF'
+          <!DOCTYPE html>
+          <html lang="es">
+          <head>
+              <meta charset="UTF-8">
+              <meta name="viewport" content="width=device-width, initial-scale=1.0">
+              <meta http-equiv="refresh" content="0; url=html/index.html">
+              <title>Sabor Limeño</title>
+          </head>
+          <body>
+              <p>Redirigiendo...</p>
+          </body>
+          </html>
+          EOF
+
+      - name: Subir pagina
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: '_site'
+
+      - name: Publicar pagina
+        id: deployment
+        uses: actions/deploy-pages@v4
