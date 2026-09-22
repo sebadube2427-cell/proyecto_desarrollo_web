@@ -1,0 +1,267 @@
+.navbar navbar-expand-lg bg-body-tertiary {
+    background-color: var(--dark-wine) !important;
+}
+
+
+
+/* =====================================================
+   CARRITO
+   ===================================================== */
+
+.carrito {
+    width: 100%;
+    padding: 60px 8%;
+}
+
+
+/* =====================================================
+   HEADER
+   ===================================================== */
+
+.carrito-header {
+    margin-bottom: 40px;
+}
+
+.carrito-header h1 {
+    font-size: 3rem;
+    color: var(--pine-teal);
+    margin-bottom: 10px;
+}
+
+.carrito-header p {
+    margin: 0;
+}
+
+
+/* =====================================================
+   CONTENIDO
+   ===================================================== */
+
+.carrito-contenido {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 40px;
+}
+
+
+/* =====================================================
+   PRODUCTOS
+   ===================================================== */
+
+.carrito-productos {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.carrito-producto {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+
+    padding: 20px;
+
+    background-color: var(--porcelain);
+}
+
+.carrito-producto img {
+    width: 130px;
+    height: 110px;
+
+    object-fit: cover;
+}
+
+
+.producto-info {
+    flex: 1;
+}
+
+.producto-info h2 {
+    font-size: 1.3rem;
+    margin-bottom: 8px;
+}
+
+.producto-info p {
+    margin-bottom: 15px;
+}
+
+
+/* =====================================================
+   CANTIDAD
+   ===================================================== */
+
+.cantidad {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.cantidad button {
+    width: 30px;
+    height: 30px;
+
+    border: none;
+
+    background-color: var(--ebony);
+    color: var(--porcelain);
+
+    cursor: pointer;
+}
+
+.cantidad span {
+    min-width: 20px;
+    text-align: center;
+}
+
+
+/* =====================================================
+   SUBTOTAL
+   ===================================================== */
+
+.producto-subtotal {
+    text-align: right;
+}
+
+.producto-subtotal p {
+    font-weight: bold;
+}
+
+.producto-subtotal button {
+    border: none;
+    background: none;
+
+    color: var(--dark-wine);
+
+    font-size: 1.2rem;
+    cursor: pointer;
+}
+
+
+/* =====================================================
+   RESUMEN
+   ===================================================== */
+
+.carrito-resumen {
+    height: fit-content;
+
+    padding: 30px;
+
+    background-color: var(--porcelain);
+}
+
+.carrito-resumen h2 {
+    margin-bottom: 25px;
+    color: var(--pine-teal);
+}
+
+.resumen-linea {
+    display: flex;
+    justify-content: space-between;
+
+    margin-bottom: 15px;
+}
+
+.resumen-separador {
+    height: 1px;
+
+    margin: 20px 0;
+
+    background-color: var(--pale-oak);
+}
+
+.resumen-total {
+    display: flex;
+    justify-content: space-between;
+
+    font-size: 1.3rem;
+    font-weight: bold;
+
+    margin-bottom: 25px;
+}
+
+.boton-pedido {
+    width: 100%;
+
+    padding: 13px;
+
+    border: none;
+
+    background-color: var(--dark-wine);
+    color: var(--porcelain);
+
+    cursor: pointer;
+}
+
+.boton-pedido:hover {
+    background-color: var(--brown-red);
+}
+
+
+/* =====================================================
+   RESPONSIVE
+   ===================================================== */
+
+@media (max-width: 700px) {
+
+    .carrito {
+        padding: 40px 5%;
+        width: 100%;
+    }
+
+    .carrito-header h1 {
+        font-size: 2.2rem;
+    }
+
+    .carrito-contenido {
+        grid-template-columns: 1fr;
+        width: 100%;
+    }
+
+    .carrito-producto {
+        width: 100%;
+        min-width: 0;
+
+        display: grid;
+        grid-template-columns: 90px 1fr;
+        gap: 15px;
+
+        padding: 15px;
+    }
+
+    .carrito-producto img {
+        width: 90px;
+        height: 90px;
+    }
+
+    .producto-info {
+        min-width: 0;
+    }
+
+    .producto-info h2 {
+        font-size: 1rem;
+    }
+
+    .producto-info p {
+        font-size: 0.9rem;
+    }
+
+    .producto-subtotal {
+        grid-column: 1 / -1;
+
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        text-align: left;
+    }
+
+    .producto-subtotal p {
+        margin: 0;
+    }
+
+    .carrito-resumen {
+        width: 100%;
+        padding: 25px;
+    }
+
+}

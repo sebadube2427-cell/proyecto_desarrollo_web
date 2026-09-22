@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+            <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+
+        <title>peruano</title>
+
+
+
+
+        <link rel="stylesheet" href="../css/styles.css">
+        <link rel="stylesheet" href="../css/index.css">
+
+    </head>
+
+
+
+
+<!--                                                              BODY                            -->  
+    <body>
+
+
+
+        <div class="promo-bar" id="promo-bar">
+            envio gratis 3km a la redonda
+        </div>
+        
+        <section class="hero">
+
+            <section  id="socials">
+                <div class="redes-sociales">
+                    <button class="boton-redes">
+                        <i class="bi bi-instagram"></i>
+                    </button>
+
+                    <button class="boton-redes">
+                        <i class="bi bi-whatsapp"></i>
+                    </button>
+                </div>
+
+                <div class="info">
+                    <p>
+                        av. concha y toro 123
+                    </p>
+                    <div class="separador"></div>
+                    <p>
+                        +56 9 1234 5678
+                    </p>
+
+                </div>
+            </section>
+
+
+            <div class="hero-content">
+                <h1>Sabor Limeño</h1>
+                <p>ceviches y platos criollos.</p>
+                <button onclick="window.location.href='menu.html'" class="btn btn-light">Ver menú</button>
+            </div>
+        </section>
+
+        <div id="side_navbar"></div>
+
+<!--                                                          SECCIONES                                               --> 
+
+        <section class="menu-section">
+
+            <div class="menu-imagen">
+                <img src="../img/menu-banner-2.jfif" alt="Platos de comida peruana">
+            </div>
+
+            <div class="menu-contenido">
+                <h2>Conoce nuestro menú</h2>
+
+                <p>
+                    Descubre nuestros platos y disfruta de los sabores
+                    tradicionales del Perú.
+                </p>
+
+                <a href="menu.html" class="menu-boton">
+                    Ver menú
+                </a>
+            </div>
+
+        </section>
+
+        <div class="separador-secciones"></div>
+
+        <section class="reserva-section">
+
+            <div class="reserva-contenido">
+                <h2>Reservas</h2>
+
+                <p>
+                    Hace una reserva y asegura un puesto en nuestro local
+                    o crea una cuenta y disfruta de pedidos gratis a tu hogar.
+                </p>
+
+                <a href="contacto.html" class="menu-boton">
+                    contacto
+                </a>
+            </div>
+
+
+            <div class="reserva-imagen">
+                <img src="../img/reserva.jfif" alt="Platos de comida peruana">
+            </div>
+
+        </section>
+
+
+<!--                                         CARRUSEL                                       --> 
+
+        <section class="mas-vendidos">
+
+            <h2>Más vendidos</h2>
+
+            <div class="carrusel-container">
+
+                <button class="carrusel-btn izquierda">
+                    &#10094;
+                </button>
+
+                <div class="productos-carrusel">
+                    <!-- Los productos se generan desde JS -->
+                </div>
+
+                <button class="carrusel-btn derecha">
+                    &#10095;
+                </button>
+
+            </div>
+
+        </section>
+
+
+
+<!--                                             NEWSLETTER                                  -->
+        <section class="newsletter">
+
+            <div class="newsletter-contenido">
+
+                <h2>Suscríbete a nuestro newsletter</h2>
+
+                <p>
+                    Recibe novedades, promociones y noticias de nuestro restaurante.
+                </p>
+
+                <form class="newsletter-form">
+
+                    <input
+                        type="email"
+                        placeholder="Tu correo electrónico"
+                        required
+                    >
+
+                    <button type="submit">
+                        Suscribirme
+                    </button>
+
+                </form>
+
+            </div>
+
+        </section>
+
+
+
+<!--                                               FOOTER                             --> 
+        <div id="mifooter"></div>
+
+        
+
+        <script src="../js/ui.js"></script>
+        <script src="../js/usuario.js"></script>
+        <script src="../js/carrito.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+    </body>
+</html>

@@ -1,0 +1,258 @@
+:root {
+    --dark-wine: #7e271fff;
+    --brown-red: #a6362bff;
+    --pale-oak: #c8baabff;
+    --soft-linen: #E9E7DA;
+    --porcelain: #fffdf9ff;
+    --dry-sage: #a5a27aff;
+    --olive-leaf: #636b2fff;
+    --ebony: #59654cff;
+    --granite: #3f4b3bff;
+    --pine-teal: #004641ff;
+}
+
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: var(--soft-linen);
+}
+
+
+
+
+
+/* =====================================================
+   NAVBAR
+   ===================================================== */
+
+.side-navbar {
+    position: fixed;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+
+    padding: 15px;
+
+    background-color: var(--dark-wine);
+    border-radius: 30px;
+
+    z-index: 1000;
+}
+
+.nav-button {
+    width: 50px;
+    height: 50px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: none;
+    border-radius: 50%;
+
+    background-color: var(--ebony);
+    color: var(--granite);
+
+    cursor: pointer;
+}
+
+
+
+
+/* =====================================================
+   CARRUSEL
+   ===================================================== */
+
+.carrusel-container {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.productos-carrusel {
+    display: flex;
+    gap: 25px;
+    overflow: hidden;
+    flex: 1;
+}
+
+.productos-carrusel .producto-card {
+    width: 250px;
+    min-width: 250px;
+    flex-shrink: 0;
+}
+
+.productos-carrusel .producto-card img {
+    width: 250px;
+    height: 200px;
+    object-fit: cover;
+    display: block;
+}
+
+.carrusel-btn {
+    border: none;
+    background: none;
+    font-size: 35px;
+    cursor: pointer;
+    flex-shrink: 0;
+}
+
+/* =====================================================
+   FOOTER
+   ===================================================== */
+
+.footer {
+    background-color: var(--dark-wine);
+    color: var(--porcelain);
+
+    padding: 50px 10% 20px;
+}
+
+.footer-contenido {
+    display: flex;
+    justify-content: space-between;
+    gap: 50px;
+}
+
+.footer-columna {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.footer-columna h3 {
+    margin-bottom: 10px;
+}
+
+.footer-columna p {
+    margin: 0;
+}
+
+.footer-columna a {
+    color: var(--porcelain);
+    text-decoration: none;
+}
+
+.footer-bottom {
+    margin-top: 40px;
+    padding-top: 20px;
+
+    border-top: 1px solid var(--pale-oak);
+
+    text-align: center;
+}
+
+.footer-bottom p {
+    margin: 0;
+}
+
+
+
+
+/* =====================================================
+   RESPONSIVE
+   ===================================================== */
+@media (max-width: 768px) {
+
+    /* ================= NAVBAR ================= */
+
+    .side-navbar {
+        right: 10px;
+
+        gap: 8px;
+        padding: 10px;
+    }
+
+    .nav-button {
+        width: 42px;
+        height: 42px;
+
+        font-size: 0.9rem;
+    }
+
+
+    
+
+
+    /* ================= CARRUSEL ================= */
+
+    .mas-vendidos {
+        padding: 40px 5%;
+    }
+
+    .mas-vendidos h2 {
+        font-size: 2rem;
+        margin-bottom: 25px;
+    }
+
+    .carrusel-container {
+        gap: 10px;
+    }
+
+    .productos-carrusel {
+        gap: 15px;
+    }
+
+    .productos-carrusel .producto-card {
+        min-width: 200px;
+    }
+
+    .productos-carrusel .producto-card img {
+        height: 160px;
+    }
+
+    .productos-carrusel .producto-card h3 {
+        font-size: 1rem;
+    }
+
+    .productos-carrusel .producto-card p {
+        font-size: 0.9rem;
+    }
+
+    .carrusel-btn {
+        font-size: 28px;
+    }
+
+
+
+
+    /* ================= FOOTER ================= */
+
+    .footer {
+        padding: 40px 5% 20px;
+    }
+
+    .footer-contenido {
+        flex-direction: column;
+
+        gap: 30px;
+
+        text-align: center;
+    }
+
+    .footer-columna {
+        width: 100%;
+    }
+
+    .footer-bottom {
+        margin-top: 30px;
+    }
+
+    .footer-bottom p {
+        font-size: 0.8rem;
+    }
+
+
+
+
+}

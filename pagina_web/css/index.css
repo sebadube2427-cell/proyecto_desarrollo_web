@@ -1,0 +1,417 @@
+/* =====================================================
+   PROMO BAR
+   ===================================================== */
+
+.promo-bar {
+    height: 25px;
+    background-color: var(--dark-wine);
+    align-content: top;
+    text-align: center;
+    color: var(--pale-oak);
+}
+
+
+/* =====================================================
+   HERO
+   ===================================================== */
+
+.hero {
+    height: calc(100vh - 25px);
+
+    background-image: url("../img/hero_1.webp");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    text-align: center;
+}
+
+.hero-content {
+    color: var(--porcelain);
+}
+
+.hero-content h1 {
+    font-size: 4rem;
+    margin-bottom: 10px;
+    color: var(--soft-linen);
+}
+
+.hero-content p {
+    font-size: 1.3rem;
+    margin-bottom: 25px;
+    color: var(--soft-linen);
+}
+
+.hero-content button {
+    background-color: var(--dark-wine);
+    border: none;
+}
+
+
+/* =====================================================
+   REDES SOCIALES
+   ===================================================== */
+
+.redes-sociales {
+    position: absolute;
+    top: 5%;
+    left: 9%;
+
+    display: flex;
+    gap: 20px;
+}
+
+.boton-redes {
+    background: none;
+    border: none;
+    padding: 0;
+
+    color: var(--soft-linen);
+    font-size: 25px;
+    cursor: pointer;
+}
+
+.boton-redes:hover {
+    transform: scale(1.15);
+}
+
+.info {
+    position: absolute;
+    top: 5%;
+    right: 7%;
+
+    display: flex;
+    align-items: center;
+    gap: 7px;
+
+    color: var(--porcelain);
+    font-size: 150%;
+}
+
+.separador {
+    width: 1.5px;
+    height: 30px;
+    background-color: var(--porcelain);
+}
+
+/* =====================================================
+   MENU BANNER
+   ===================================================== */
+
+.menu-section {
+    width: 100%;
+    min-height: 50vh;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 80px;
+    padding: 50px 10%;
+}
+
+.menu-imagen {
+    width: 40%;
+}
+
+.menu-imagen img {
+    width: 100%;
+    height: 350px;
+
+    object-fit: cover;
+    display: block;
+}
+
+.menu-contenido {
+    width: 40%;
+}
+
+.menu-contenido h2 {
+    font-size: 3rem;
+    margin-bottom: 20px;
+    color: var(--pine-teal);
+}
+
+.menu-contenido p {
+    font-size: 1.1rem;
+    margin-bottom: 30px;
+    color: var(--pine-teal);
+}
+
+.menu-boton {
+    text-decoration: none;
+    padding: 12px 25px;
+    color: var(--brown-red);
+}
+
+
+/* =====================================================
+   RESERVA
+   ===================================================== */
+
+.reserva-section {
+    width: 100%;
+    min-height: 50vh;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 80px;
+    padding: 50px 10%;
+}
+
+.reserva-imagen {
+    width: 40%;
+}
+
+.reserva-imagen img {
+    width: 100%;
+    height: 300px;
+
+    object-fit: cover;
+    display: block;
+}
+
+.reserva-contenido {
+    width: 40%;
+}
+
+.reserva-contenido h2 {
+    font-size: 3rem;
+    margin-bottom: 20px;
+    color: var(--pine-teal);
+}
+
+.reserva-contenido p {
+    font-size: 1.1rem;
+    margin-bottom: 30px;
+    color: var(--pine-teal);
+}
+/* =====================================================
+   NEWSLETTER
+   ===================================================== */
+
+.newsletter {
+    width: 100%;
+    padding: 70px 10%;
+
+    background-color: var(--ebony);
+    text-align: center;
+}
+
+.newsletter-contenido {
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+.newsletter h2 {
+    font-size: 2.5rem;
+    margin-bottom: 15px;
+}
+
+.newsletter p {
+    margin-bottom: 30px;
+}
+
+.newsletter-form {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+.newsletter-form input {
+    width: 400px;
+    padding: 12px 15px;
+    border: none;
+}
+
+.newsletter-form button {
+    padding: 12px 25px;
+
+    border: none;
+
+    background-color: var(--dark-wine);
+    color: var(--porcelain);
+
+    cursor: pointer;
+}
+
+/* =====================================================
+   RESPONSIVE
+   ===================================================== */
+
+@media (max-width: 768px) {
+
+
+    /* ================= PROMO ================= */
+
+    .promo-bar {
+        height: auto;
+        min-height: 25px;
+
+        padding: 5px;
+
+        font-size: 0.8rem;
+    }
+
+
+    /* ================= HERO ================= */
+
+    .hero {
+        height: calc(100vh - 25px);
+        min-height: 500px;
+
+        padding: 20px;
+    }
+
+    .hero-content h1 {
+        font-size: 2.5rem;
+    }
+
+    .hero-content p {
+        font-size: 1rem;
+        margin-bottom: 20px;
+    }
+
+
+    /* ================= REDES ================= */
+
+    .redes-sociales {
+        top: 4%;
+        left: 5%;
+
+        gap: 12px;
+    }
+
+    .boton-redes {
+        font-size: 20px;
+    }
+
+    .info {
+        top: 4%;
+        right: 5%;
+
+        font-size: 0.8rem;
+        gap: 5px;
+    }
+
+    .separador {
+        height: 20px;
+    }
+
+    /* ================= MENU BANNER ================= */
+
+    .menu-section {
+        flex-direction: column;
+
+        gap: 25px;
+        padding: 40px 5%;
+    }
+
+    .menu-imagen,
+    .menu-contenido {
+        width: 100%;
+    }
+
+    .menu-imagen img {
+        height: 250px;
+    }
+
+    .menu-contenido {
+        text-align: center;
+    }
+
+    .menu-contenido h2 {
+        font-size: 2rem;
+    }
+
+    .menu-contenido p {
+        font-size: 1rem;
+    }
+
+
+    /* ================= RESERVA ================= */
+
+    .reserva-section {
+        flex-direction: column;
+
+        gap: 25px;
+        padding: 40px 5%;
+    }
+
+    .reserva-imagen,
+    .reserva-contenido {
+        width: 100%;
+    }
+
+    .reserva-contenido {
+        text-align: center;
+        order: 1;
+    }
+
+    .reserva-imagen {
+        order: 2;
+    }
+
+    .reserva-imagen img {
+        height: 250px;
+    }
+
+    .reserva-contenido h2 {
+        font-size: 2rem;
+    }
+
+    .reserva-contenido p {
+        font-size: 1rem;
+    }
+
+
+
+    .menu-section,
+    .reserva-section {
+        flex-direction: column;
+    }
+
+    .menu-imagen,
+    .reserva-imagen {
+        order: 1;
+        width: 100%;
+    }
+
+    .menu-contenido,
+    .reserva-contenido {
+        order: 2;
+        width: 100%;
+    }
+
+
+    /* ================= NEWSLETTER ================= */
+
+    .newsletter {
+        padding: 50px 5%;
+    }
+
+    .newsletter h2 {
+        font-size: 2rem;
+    }
+
+    .newsletter p {
+        font-size: 0.95rem;
+    }
+
+    .newsletter-form {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .newsletter-form input,
+    .newsletter-form button {
+        width: 100%;
+    }
+
+}

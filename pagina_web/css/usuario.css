@@ -1,0 +1,310 @@
+.usuario {
+    width: 100%;
+    padding: 60px 8%;
+}
+
+.usuario-header {
+    margin-bottom: 40px;
+    text-align: center;
+}
+
+.usuario-header h1 {
+    font-size: 3rem;
+    color: var(--pine-teal);
+    margin-bottom: 10px;
+}
+
+.usuario-header p {
+    margin: 0;
+}
+
+
+.usuario-formulario {
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+
+    padding: 35px;
+
+    background-color: var(--porcelain);
+}
+
+
+.formulario-grupo {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+}
+
+.formulario-grupo label {
+    margin-bottom: 7px;
+
+    font-weight: 600;
+
+    color: var(--granite);
+}
+
+
+.formulario-grupo input,
+.formulario-grupo select {
+    width: 100%;
+
+    padding: 11px 13px;
+
+    border: 1px solid var(--pale-oak);
+    border-radius: 6px;
+
+    background-color: white;
+
+    font-size: 1rem;
+
+    outline: none;
+}
+
+
+.formulario-grupo input:focus,
+.formulario-grupo select:focus {
+    border-color: var(--pine-teal);
+}
+
+
+.formulario-fila {
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    gap: 20px;
+}
+
+
+.boton-formulario {
+    width: 100%;
+
+    padding: 13px;
+
+    border: none;
+    border-radius: 6px;
+
+    background-color: var(--dark-wine);
+
+    color: var(--porcelain);
+
+    font-size: 1rem;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition:
+        background-color 0.2s ease,
+        transform 0.2s ease;
+}
+
+
+.boton-formulario:hover {
+    background-color: var(--brown-red);
+
+    transform: translateY(-2px);
+}
+
+
+.boton-formulario:active {
+    transform: translateY(0);
+}
+
+
+.mensaje-formulario {
+    min-height: 24px;
+
+    margin-bottom: 15px;
+
+    text-align: center;
+
+    font-weight: 600;
+}
+
+
+.formulario-enlace {
+    margin-top: 20px;
+
+    text-align: center;
+}
+
+
+.formulario-enlace a {
+    color: var(--dark-wine);
+
+    font-weight: 600;
+
+    text-decoration: none;
+}
+
+
+.formulario-enlace a:hover {
+    color: var(--brown-red);
+
+    text-decoration: underline;
+}
+
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media (max-width: 700px) {
+
+    .usuario {
+        padding: 40px 5%;
+    }
+
+
+    .usuario-header h1 {
+        font-size: 2.2rem;
+    }
+
+
+    .usuario-formulario {
+        padding: 25px 20px;
+    }
+
+
+    .formulario-fila {
+        grid-template-columns: 1fr;
+
+        gap: 0;
+    }
+
+}
+
+/* =========================
+   LOGIN
+========================= */
+
+.login-formulario {
+    max-width: 550px;
+}
+
+
+/* =========================
+   PERFIL
+========================= */
+
+.perfil-contenido {
+    width: 100%;
+    max-width: 900px;
+
+    margin: 0 auto;
+
+    padding: 35px;
+
+    background-color: var(--porcelain);
+}
+
+
+.perfil-datos {
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    gap: 25px;
+}
+
+
+.perfil-dato {
+    padding-bottom: 15px;
+
+    border-bottom: 1px solid var(--pale-oak);
+}
+
+
+.perfil-dato span {
+    display: block;
+
+    margin-bottom: 5px;
+
+    font-size: 0.9rem;
+
+    font-weight: 600;
+
+    color: var(--pine-teal);
+}
+
+
+.perfil-dato p {
+    margin: 0;
+
+    color: var(--granite);
+}
+
+
+.perfil-acciones {
+    display: flex;
+
+    gap: 15px;
+
+    margin-top: 35px;
+}
+
+
+.perfil-acciones .boton-formulario {
+    flex: 1;
+}
+
+
+.boton-cerrar-sesion {
+    flex: 1;
+
+    padding: 13px;
+
+    border: none;
+    border-radius: 6px;
+
+    background-color: var(--ebony);
+
+    color: var(--porcelain);
+
+    font-size: 1rem;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition:
+        background-color 0.2s ease,
+        transform 0.2s ease;
+}
+
+
+.boton-cerrar-sesion:hover {
+    background-color: var(--granite);
+
+    transform: translateY(-2px);
+}
+
+
+.boton-cerrar-sesion:active {
+    transform: translateY(0);
+}
+
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media (max-width: 700px) {
+
+    .perfil-contenido {
+        padding: 25px 20px;
+    }
+
+
+    .perfil-datos {
+        grid-template-columns: 1fr;
+
+        gap: 20px;
+    }
+
+
+    .perfil-acciones {
+        flex-direction: column;
+    }
+
+}

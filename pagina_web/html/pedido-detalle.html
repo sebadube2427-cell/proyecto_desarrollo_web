@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Detalle del pedido | Sabor Limeño</title>
+
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/pedidos.css">
+
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+    >
+
+    <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css"
+    >
+</head>
+
+<body>
+
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+        <div class="container-fluid">
+
+            <a class="navbar-brand" href="index.html">
+                Sabores del Perú
+            </a>
+
+            <div class="navbar-nav">
+                <a class="nav-link" href="index.html">Inicio</a>
+                <a class="nav-link" href="menu.html">Menú</a>
+                <a class="nav-link" href="contacto.html">Contacto</a>
+                <a class="nav-link" href="carrito.html">Carrito</a>
+            </div>
+
+        </div>
+    </nav>
+
+    <main class="pedido-detalle">
+
+        <section class="detalle-header">
+
+            <h1>Pedido #1024</h1>
+
+            <p>19 de septiembre de 2026</p>
+
+            <p>
+                <strong>Estado:</strong> En preparación
+            </p>
+
+        </section>
+
+        <section class="detalle-contenido">
+
+            <div class="detalle-productos">
+
+                <h2>Productos</h2>
+
+                <div class="detalle-producto">
+                    <div>
+                        <h3>Ceviche</h3>
+                        <p>Cantidad: 1</p>
+                    </div>
+
+                    <strong>$12.990</strong>
+                </div>
+
+                <div class="detalle-producto">
+                    <div>
+                        <h3>Lomo saltado</h3>
+                        <p>Cantidad: 1</p>
+                    </div>
+
+                    <strong>$13.990</strong>
+                </div>
+
+                <div class="detalle-producto">
+                    <div>
+                        <h3>Arroz chaufa</h3>
+                        <p>Cantidad: 1</p>
+                    </div>
+
+                    <strong>$10.990</strong>
+                </div>
+
+                <hr>
+
+                <div class="detalle-total">
+                    <strong>Total</strong>
+                    <strong>$37.970</strong>
+                </div>
+
+            </div>
+
+            <div class="detalle-entrega">
+
+                <h2>Datos de entrega</h2>
+
+                <p><strong>Cliente:</strong> Juan Pérez</p>
+                <p><strong>Dirección:</strong> Av. Principal 123</p>
+                <p><strong>Comuna:</strong> Santiago</p>
+                <p><strong>Teléfono:</strong> +56 9 1234 5678</p>
+
+            </div>
+
+            <div class="detalle-acciones">
+
+                <a href="mispedidos.html">
+                    Volver a mis pedidos
+                </a>
+
+                <button type="button">
+                    Anular pedido
+                </button>
+
+            </div>
+
+        </section>
+
+    </main>
+
+    <div id="mifooter"></div>
+
+    <script src="../js/ui.js"></script>
+    <script src="../js/usuario.js"></script>
+    <script src="../js/carrito.js"></script>
+
+</body>
+
+</html>
