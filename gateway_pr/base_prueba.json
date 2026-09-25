@@ -1,0 +1,31 @@
+{
+  "productos": [
+    {
+      "id": 1,
+      "nombre": "Ceviche",
+      "precio": 12990
+    },
+    {
+      "id": 2,
+      "nombre": "Lomo Saltado",
+      "precio": 13990
+    },
+    {
+      "id": 3,
+      "nombre": "Ají de Gallina",
+      "precio": 11990
+    }
+  ],
+  "ordenes": [
+    {
+      "id": 1,
+      "producto_id": 1,
+      "cantidad": 2
+    },
+    {
+      "id": 2,
+      "producto_id": 2,
+      "cantidad": 1
+    }
+  ]
+}
