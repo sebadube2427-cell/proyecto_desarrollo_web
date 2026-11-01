@@ -1,62 +1,105 @@
-const api = [
-    {
-        nombre: "Ceviche",
-        precio: 12990,
-        imagen: "../img/productos/ceviche.jfif",
-        categoria: "entrada",
-        masvendido: true
-    },
-    {
-        nombre: "Lomo saltado",
-        precio: 13990,
-        imagen: "../img/productos/lomo-saltado.jfif",
-        categoria: "fondo",
-        masvendido: true
-    },
-    {
-        nombre: "Ají de gallina",
-        precio: 11990,
-        imagen: "../img/productos/aji-gallina.jfif",
-        categoria: "fondo",
-        masvendido: true
-    },
-    {
-        nombre: "Anticuchos",
-        precio: 9990,
-        imagen: "../img/productos/anticucho.jfif",
-        categoria: "entrada",
-        masvendido: true
-    },
-    {
-        nombre: "Arroz chaufa",
-        precio: 10990,
-        imagen: "../img/productos/chaufa.jfif",
-        categoria: "fondo",
-        masvendido: true
-    },
-    {
-        nombre: "Causa limeña",
-        precio: 8990,
-        imagen: "../img/productos/limeña.jfif",
-        categoria: "postre",
-        masvendido: true
-    }
-];
+let api = [];
 
 
 /* =========================
-   CARRUSEL
+   PRODUCTOS DESDE EL BACKEND
 ========================= */
 
-const productosMasVendidos = api.filter(
-    producto => producto.masvendido === true
-);
+const API_URL = "http://127.0.0.1:8000/api/products";
 
-const carrusel = document.querySelector(".productos-carrusel");
+async function cargarProductos() {
+    try {
+        const respuesta = await fetch(API_URL);
 
-if (carrusel) {
+        if (!respuesta.ok) {
+            throw new Error(`Error HTTP: ${respuesta.status}`);
+        }
 
-    productosMasVendidos.forEach(producto => {
+        api = await respuesta.json();
+
+        renderizarProductos();
+
+    } catch (error) {
+        console.error("Error al cargar los productos:", error);
+    }
+}
+
+
+/* =========================
+   MOSTRAR PRODUCTOS
+========================= */
+
+function renderizarProductos() {
+
+    // CARRUSEL
+    const productosMasVendidos = api.filter(
+        producto => producto.masvendido === true
+    );
+
+    const carrusel = document.querySelector(".productos-carrusel");
+
+    if (carrusel) {
+        carrusel.innerHTML = "";
+
+        productosMasVendidos.forEach(producto => {
+            const tarjeta = document.createElement("div");
+
+            tarjeta.classList.add("producto-card");
+
+            tarjeta.innerHTML = `
+                <img src="${producto.imagen}" alt="${producto.nombre}">
+                <h3>${producto.nombre}</h3>
+                <p>$${producto.precio.toLocaleString("es-CL")}</p>
+            `;
+
+            carrusel.appendChild(tarjeta);
+        });
+
+        const botonDerecha = document.querySelector(
+            ".carrusel-btn.derecha"
+        );
+
+        function obtenerAnchoTarjeta() {
+            const tarjeta = carrusel.querySelector(".producto-card");
+
+            if (!tarjeta) return 0;
+
+            const estilo = getComputedStyle(carrusel);
+            const gap = parseFloat(estilo.gap) || 0;
+
+            return tarjeta.offsetWidth + gap;
+        }
+
+        if (botonDerecha) {
+            botonDerecha.onclick = () => {
+                carrusel.scrollBy({
+                    left: obtenerAnchoTarjeta(),
+                    behavior: "smooth"
+                });
+            };
+        }
+    }
+
+
+    // PRODUCTOS DEL MENÚ
+    const categorias = {
+        entrada: document.getElementById("entradas"),
+        fondo: document.getElementById("fondos"),
+        bebestible: document.getElementById("bebestibles"),
+        postre: document.getElementById("postres")
+    };
+
+    // Limpiar los contenedores antes de agregar los productos
+    Object.values(categorias).forEach(contenedor => {
+        if (contenedor) {
+            contenedor.innerHTML = "";
+        }
+    });
+
+    api.forEach(producto => {
+        const contenedor = categorias[producto.categoria];
+
+        if (!contenedor) return;
 
         const tarjeta = document.createElement("div");
 
@@ -66,82 +109,22 @@ if (carrusel) {
             <img src="${producto.imagen}" alt="${producto.nombre}">
             <h3>${producto.nombre}</h3>
             <p>$${producto.precio.toLocaleString("es-CL")}</p>
+
+            <button
+                type="button"
+                onclick="agregarAlCarrito('${producto.nombre}')"
+            >
+                Agregar al carrito
+            </button>
         `;
 
-        carrusel.appendChild(tarjeta);
+        contenedor.appendChild(tarjeta);
     });
-
-
-    const botonDerecha = document.querySelector(
-        ".carrusel-btn.derecha"
-    );
-
-    function obtenerAnchoTarjeta() {
-
-        const tarjeta = carrusel.querySelector(".producto-card");
-
-        if (!tarjeta) return 0;
-
-        const estilo = getComputedStyle(carrusel);
-
-        return tarjeta.offsetWidth + parseInt(estilo.gap);
-    }
-
-
-    if (botonDerecha) {
-
-        botonDerecha.addEventListener("click", () => {
-
-            carrusel.scrollBy({
-                left: obtenerAnchoTarjeta(),
-                behavior: "smooth"
-            });
-
-        });
-
-    }
 }
 
 
-/* =========================
-   PRODUCTOS DEL MENÚ
-========================= */
-
-const categorias = {
-    entrada: document.getElementById("entradas"),
-    fondo: document.getElementById("fondos"),
-    bebestible: document.getElementById("bebestibles"),
-    postre: document.getElementById("postres")
-};
-
-api.forEach(producto => {
-
-    const contenedor = categorias[producto.categoria];
-
-    if (!contenedor) return;
-
-
-    const tarjeta = document.createElement("div");
-
-    tarjeta.classList.add("producto-card");
-
-    tarjeta.innerHTML = `
-        <img src="${producto.imagen}" alt="${producto.nombre}">
-
-        <h3>${producto.nombre}</h3>
-
-        <p>$${producto.precio.toLocaleString("es-CL")}</p>
-
-        <button
-            type="button"
-            onclick="agregarAlCarrito('${producto.nombre}')"
-        >
-            Agregar al carrito
-        </button>
-    `;
-
-    contenedor.appendChild(tarjeta);
-});
+// Iniciar la carga de productos
+cargarProductos();
 
 
 /* =========================
@@ -179,7 +162,7 @@ function crearNavbar() {
             </button>
 
             <button
-                onclick="irACuenta()"
+                onclick="window.location.href='login.html'"
                 class="nav-button"
             >
                 👤

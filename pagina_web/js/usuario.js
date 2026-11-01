@@ -1,49 +1,3 @@
-/* =========================
-   USUARIOS
-========================= */
-
-function obtenerUsuarios() {
-
-    return JSON.parse(
-        localStorage.getItem("usuarios")
-    ) || [];
-}
-
-
-function guardarUsuarios(usuarios) {
-
-    localStorage.setItem(
-        "usuarios",
-        JSON.stringify(usuarios)
-    );
-}
-
-
-/* =========================
-   SESIÓN ACTUAL
-========================= */
-
-function obtenerUsuarioActual() {
-
-    return JSON.parse(
-        localStorage.getItem("usuarioActual")
-    );
-}
-
-
-function guardarUsuarioActual(usuario) {
-
-    localStorage.setItem(
-        "usuarioActual",
-        JSON.stringify(usuario)
-    );
-}
-
-
-/* =========================
-   VALIDAR RUN
-========================= */
-
 function validarRUN(run) {
 
     run = run
@@ -113,6 +67,7 @@ function validarRUN(run) {
     return resultado === digitoVerificador;
 }
 
+const API_URL_USERS = "http://127.0.0.1:8000/api";
 
 /* =========================
    REGISTRO
@@ -124,180 +79,104 @@ const formularioRegistro =
 const mensajeRegistro =
     document.getElementById("mensajeRegistro");
 
-
 if (formularioRegistro) {
 
-    formularioRegistro.addEventListener(
-        "submit",
-        function (evento) {
+    formularioRegistro.addEventListener("submit", async function (evento) {
 
-            evento.preventDefault();
+        evento.preventDefault();
 
 
-            const run =
-                document.getElementById("run").value.trim();
+        const run = document.getElementById("run").value.trim();
+        const nombre = document.getElementById("nombre").value.trim();
+        const direccion = document.getElementById("direccion").value.trim();
+        const comuna = document.getElementById("comuna").value.trim();
+        const provincia = document.getElementById("provincia").value.trim();
+        const region = document.getElementById("region").value.trim();
+        const fechaNacimiento = document.getElementById("fechaNacimiento").value;
+        const sexo = document.getElementById("sexo").value;
+        const correo = document.getElementById("correo").value.trim();
+        const telefono = document.getElementById("telefono").value.trim();
+        const contrasena = document.getElementById("contrasena").value;
+        const confirmarContrasena =
+            document.getElementById("confirmarContrasena").value;
 
-            const nombre =
-                document.getElementById("nombre").value.trim();
+        // Validar RUN
+        if (!validarRUN(run)) {
+            mostrarMensajeRegistro("El RUN ingresado no es válido.", true);
+            return;
+        }
 
-            const direccion =
-                document.getElementById("direccion").value.trim();
+        // Validar contraseñas
+        if (contrasena !== confirmarContrasena) {
+            mostrarMensajeRegistro("Las contraseñas no coinciden.", true);
+            return;
+        }
 
-            const comuna =
-                document.getElementById("comuna").value.trim();
+        // Normalizar RUN
+        const runNormalizado = run
+            .replace(/\./g, "")
+            .replace(/-/g, "")
+            .toUpperCase();
 
-            const provincia =
-                document.getElementById("provincia").value.trim();
+        // Preparar datos para el backend
+        const nuevoUsuario = {
+            rut: runNormalizado,
+            nombre: nombre,
+            direccion: direccion,
+            comuna: comuna,
+            provincia: provincia,
+            region: region,
+            fecha_nacimiento: fechaNacimiento,
+            sexo: sexo,
+            email: correo,
+            numero: telefono,
+            password: contrasena
+        };
 
-            const region =
-                document.getElementById("region").value.trim();
+        try {
 
-            const fechaNacimiento =
-                document.getElementById("fechaNacimiento").value;
+            const respuesta = await fetch(`${API_URL_USERS}/users`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(nuevoUsuario)
+            });
 
-            const sexo =
-                document.getElementById("sexo").value;
-
-            const correo =
-                document.getElementById("correo").value.trim();
-
-            const telefono =
-                document.getElementById("telefono").value.trim();
-
-            const contrasena =
-                document.getElementById("contrasena").value;
-
-            const confirmarContrasena =
-                document.getElementById("confirmarContrasena").value;
+            const resultado = await respuesta.json();
 
 
-            if (!validarRUN(run)) {
-
-                mostrarMensajeRegistro(
-                    "El RUN ingresado no es válido.",
-                    true
+            if (!respuesta.ok) {
+                throw new Error(
+                    resultado.detail || "No se pudo crear la cuenta."
                 );
-
-                return;
             }
-
-
-            if (contrasena !== confirmarContrasena) {
-
-                mostrarMensajeRegistro(
-                    "Las contraseñas no coinciden.",
-                    true
-                );
-
-                return;
-            }
-
-
-            const usuarios = obtenerUsuarios();
-
-
-            const correoExiste =
-                usuarios.some(
-                    usuario =>
-                        usuario.correo.toLowerCase() ===
-                        correo.toLowerCase()
-                );
-
-
-            if (correoExiste) {
-
-                mostrarMensajeRegistro(
-                    "Este correo ya está registrado.",
-                    true
-                );
-
-                return;
-            }
-
-
-            const runNormalizado =
-                run
-                    .replace(/\./g, "")
-                    .replace(/-/g, "")
-                    .toUpperCase();
-
-
-            const runExiste =
-                usuarios.some(
-                    usuario =>
-                        usuario.run === runNormalizado
-                );
-
-
-            if (runExiste) {
-
-                mostrarMensajeRegistro(
-                    "Este RUN ya está registrado.",
-                    true
-                );
-
-                return;
-            }
-
-
-            const nuevoUsuario = {
-
-                run: runNormalizado,
-
-                nombre: nombre,
-
-                direccion: direccion,
-
-                comuna: comuna,
-
-                provincia: provincia,
-
-                region: region,
-
-                fechaNacimiento:
-                    fechaNacimiento,
-
-                sexo: sexo,
-
-                correo: correo,
-
-                telefono: telefono,
-
-                contrasena: contrasena
-
-            };
-
-
-            usuarios.push(nuevoUsuario);
-
-
-            guardarUsuarios(usuarios);
-
 
             mostrarMensajeRegistro(
                 "Registro exitoso. Redirigiendo al inicio de sesión...",
                 false
             );
 
-
             formularioRegistro.reset();
 
-
             setTimeout(() => {
-
-                window.location.href =
-                    "login.html";
-
+                window.location.href = "login.html";
             }, 1500);
 
-        }
-    );
+        } catch (error) {
 
+            mostrarMensajeRegistro(error.message, true);
+            console.error("Error en el registro:", error);
+
+        }
+
+    });
 }
 
 
+
 /* =========================
-   MENSAJE REGISTRO
+   MENSAJES
 ========================= */
 
 function mostrarMensajeRegistro(
@@ -318,10 +197,10 @@ function mostrarMensajeRegistro(
             : "var(--pine-teal)";
 }
 
-
 /* =========================
    LOGIN
 ========================= */
+
 
 const formularioLogin =
     document.getElementById("formLogin");
@@ -334,62 +213,74 @@ if (formularioLogin) {
 
     formularioLogin.addEventListener(
         "submit",
-        function (evento) {
+        async function (evento) {
 
             evento.preventDefault();
 
-
             const correo =
-                document.getElementById("correo")
-                    .value
-                    .trim();
-
+                document.getElementById("correo").value.trim();
 
             const contrasena =
-                document.getElementById("contrasena")
-                    .value;
+                document.getElementById("contrasena").value;
 
+            // Preparar datos para el backend
+            const login = {
+                email: correo,
+                password: contrasena
+            };
 
-            const usuarios =
-                obtenerUsuarios();
+            try {
 
+                const respuesta = await fetch(`${API_URL_USERS}/login`, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(login)
+                });
 
-            const usuario =
-                usuarios.find(
-                    usuario =>
-                        usuario.correo.toLowerCase() ===
-                        correo.toLowerCase() &&
-                        usuario.contrasena ===
-                        contrasena
+                const resultado = await respuesta.json();
+
+                console.log("Respuesta del login:", resultado);
+
+                if (!respuesta.ok) {
+                    throw new Error(
+                        resultado.detail || "No se pudo iniciar sesión."
+                    );
+                }
+
+                // Guardar token de autenticación
+                localStorage.setItem(
+                    "access_token",
+                    resultado.access_token
                 );
 
+                // Guardar información básica de la sesión
+                const usuario = {
+                    email: correo
+                };
 
-            if (!usuario) {
+                localStorage.setItem(
+                    "usuarioActual",
+                    JSON.stringify(usuario)
+                );
 
                 mostrarMensajeLogin(
-                    "El correo o la contraseña son incorrectos.",
-                    true
+                    "Inicio de sesión correcto. Redirigiendo...",
+                    false
                 );
 
-                return;
+                setTimeout(() => {
+                    window.location.href = "perfil.html";
+                }, 1000);
+
+            } catch (error) {
+
+                mostrarMensajeLogin(error.message, true);
+
+                console.error("Error en el login:", error);
+
             }
-
-
-            guardarUsuarioActual(usuario);
-
-
-            mostrarMensajeLogin(
-                "Inicio de sesión correcto. Redirigiendo...",
-                false
-            );
-
-
-            setTimeout(() => {
-
-                window.location.href =
-                    "perfil.html";
-
-            }, 1000);
 
         }
     );
@@ -424,181 +315,32 @@ function mostrarMensajeLogin(
    IR A CUENTA
 ========================= */
 
-function irACuenta() {
 
-    const usuario =
-        obtenerUsuarioActual();
-
-
-    if (usuario) {
-
-        window.location.href =
-            "perfil.html";
-
-    } else {
-
-        window.location.href =
-            "login.html";
-
-    }
-}
 
 
 /* =========================
    MOSTRAR PERFIL
 ========================= */
 
-function mostrarPerfil() {
-
-    const usuario =
-        obtenerUsuarioActual();
 
 
-    if (!usuario) {
-
-        window.location.href =
-            "login.html";
-
-        return;
-    }
 
 
-    const perfilRun =
-        document.getElementById("perfilRun");
-
-    const perfilNombre =
-        document.getElementById("perfilNombre");
-
-    const perfilDireccion =
-        document.getElementById("perfilDireccion");
-
-    const perfilComuna =
-        document.getElementById("perfilComuna");
-
-    const perfilProvincia =
-        document.getElementById("perfilProvincia");
-
-    const perfilRegion =
-        document.getElementById("perfilRegion");
-
-    const perfilFechaNacimiento =
-        document.getElementById("perfilFechaNacimiento");
-
-    const perfilSexo =
-        document.getElementById("perfilSexo");
-
-    const perfilCorreo =
-        document.getElementById("perfilCorreo");
-
-    const perfilTelefono =
-        document.getElementById("perfilTelefono");
 
 
-    if (perfilRun) {
 
-        perfilRun.textContent =
-            usuario.run;
+async function get_user_data() {
+    await 
 
-    }
-
-
-    if (perfilNombre) {
-
-        perfilNombre.textContent =
-            usuario.nombre;
-
-    }
-
-
-    if (perfilDireccion) {
-
-        perfilDireccion.textContent =
-            usuario.direccion;
-
-    }
-
-
-    if (perfilComuna) {
-
-        perfilComuna.textContent =
-            usuario.comuna;
-
-    }
-
-
-    if (perfilProvincia) {
-
-        perfilProvincia.textContent =
-            usuario.provincia;
-
-    }
-
-
-    if (perfilRegion) {
-
-        perfilRegion.textContent =
-            usuario.region;
-
-    }
-
-
-    if (perfilFechaNacimiento) {
-
-        perfilFechaNacimiento.textContent =
-            usuario.fechaNacimiento;
-
-    }
-
-
-    if (perfilSexo) {
-
-        perfilSexo.textContent =
-            usuario.sexo;
-
-    }
-
-
-    if (perfilCorreo) {
-
-        perfilCorreo.textContent =
-            usuario.correo;
-
-    }
-
-
-    if (perfilTelefono) {
-
-        perfilTelefono.textContent =
-            usuario.telefono;
-
-    }
 }
+const cuenta =
+    document.getElementById("usuario");
 
+if (cuenta) {
 
-/* =========================
-   CERRAR SESIÓN
-========================= */
+    async function user_data (){
 
-function cerrarSesion() {
-
-    localStorage.removeItem(
-        "usuarioActual"
-    );
-
-
-    window.location.href =
-        "login.html";
-}
-
-
-/* =========================
-   INICIALIZAR PERFIL
-========================= */
-
-if (
-    document.getElementById("perfilRun")
-) {
-
-    mostrarPerfil();
-
+        evento.preventDefault();
+    }
+    
 }
