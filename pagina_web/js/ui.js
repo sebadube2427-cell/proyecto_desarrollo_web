@@ -1,21 +1,24 @@
 let api = [];
-
-
-/* =========================
-   PRODUCTOS DESDE EL BACKEND
-========================= */
+/* llamada hacia el backend*/
 
 const API_URL = "http://127.0.0.1:8000/api/products";
-
 async function cargarProductos() {
     try {
-        const respuesta = await fetch(API_URL);
+        const productosGuardados = sessionStorage.getItem("productos");
 
-        if (!respuesta.ok) {
-            throw new Error(`Error HTTP: ${respuesta.status}`);
+        if (productosGuardados) {
+            api = JSON.parse(productosGuardados);
+        } else {
+            const respuesta = await fetch(API_URL);
+
+            if (!respuesta.ok) {
+                throw new Error(`Error HTTP: ${respuesta.status}`);
+            }
+
+            api = await respuesta.json();
+
+            sessionStorage.setItem("productos", JSON.stringify(api));
         }
-
-        api = await respuesta.json();
 
         renderizarProductos();
 
@@ -25,63 +28,75 @@ async function cargarProductos() {
 }
 
 
-/* =========================
-   MOSTRAR PRODUCTOS
-========================= */
+
 
 function renderizarProductos() {
+    renderizarCarrusel(api);
+    renderizarMenu(api);
+}
 
-    // CARRUSEL
-    const productosMasVendidos = api.filter(
-        producto => producto.masvendido === true
+
+function renderizarCarrusel(productos) {
+    const productosMasVendidos = productos.filter(
+        producto => producto.masvendidos === true
     );
-
     const carrusel = document.querySelector(".productos-carrusel");
 
-    if (carrusel) {
-        carrusel.innerHTML = "";
+    if (!carrusel) return;
 
-        productosMasVendidos.forEach(producto => {
-            const tarjeta = document.createElement("div");
+    carrusel.innerHTML = "";
 
-            tarjeta.classList.add("producto-card");
+    productosMasVendidos.forEach(producto => {
+        const tarjeta = document.createElement("div");
+        tarjeta.classList.add("producto-card");
 
-            tarjeta.innerHTML = `
-                <img src="${producto.imagen}" alt="${producto.nombre}">
-                <h3>${producto.nombre}</h3>
-                <p>$${producto.precio.toLocaleString("es-CL")}</p>
-            `;
+        tarjeta.innerHTML = `
+            <img src="${producto.imagen}" alt="${producto.nombre}">
+            <h3>${producto.nombre}</h3>
+            <p>$${producto.precio.toLocaleString("es-CL")}</p>
+        `;
 
-            carrusel.appendChild(tarjeta);
-        });
+        carrusel.appendChild(tarjeta);
+    });
 
-        const botonDerecha = document.querySelector(
-            ".carrusel-btn.derecha"
-        );
+    const botonDerecha = document.querySelector(".carrusel-btn.derecha");
 
-        function obtenerAnchoTarjeta() {
-            const tarjeta = carrusel.querySelector(".producto-card");
+    const botonIzquierda = document.querySelector(".carrusel-btn.izquierda");
+    function obtenerAnchoTarjeta() {
+        const tarjeta = carrusel.querySelector(".producto-card");
 
-            if (!tarjeta) return 0;
+        if (!tarjeta) return 0;
 
-            const estilo = getComputedStyle(carrusel);
-            const gap = parseFloat(estilo.gap) || 0;
+        const estilo = getComputedStyle(carrusel);
+        const gap = parseFloat(estilo.gap) || 0;
 
-            return tarjeta.offsetWidth + gap;
-        }
-
-        if (botonDerecha) {
-            botonDerecha.onclick = () => {
-                carrusel.scrollBy({
-                    left: obtenerAnchoTarjeta(),
-                    behavior: "smooth"
-                });
-            };
-        }
+        return tarjeta.offsetWidth + gap;
     }
 
+    if (botonDerecha) {
+        botonDerecha.addEventListener("click", () => {
+            console.log("Click derecha");
+            carrusel.scrollBy({
+                left: obtenerAnchoTarjeta(),
+                behavior: "smooth"
+            });
+        });
+    }
 
-    // PRODUCTOS DEL MENÚ
+    if (botonIzquierda) {
+        botonIzquierda.addEventListener("click", () => {
+            console.log("Click izquierda");
+            carrusel.scrollBy({
+                left: -obtenerAnchoTarjeta(),
+                behavior: "smooth"
+            });
+        });
+    }
+}
+
+
+
+function renderizarMenu(productos) {
     const categorias = {
         entrada: document.getElementById("entradas"),
         fondo: document.getElementById("fondos"),
@@ -89,20 +104,18 @@ function renderizarProductos() {
         postre: document.getElementById("postres")
     };
 
-    // Limpiar los contenedores antes de agregar los productos
     Object.values(categorias).forEach(contenedor => {
         if (contenedor) {
             contenedor.innerHTML = "";
         }
     });
 
-    api.forEach(producto => {
+    productos.forEach(producto => {
         const contenedor = categorias[producto.categoria];
 
         if (!contenedor) return;
 
         const tarjeta = document.createElement("div");
-
         tarjeta.classList.add("producto-card");
 
         tarjeta.innerHTML = `
@@ -112,7 +125,7 @@ function renderizarProductos() {
 
             <button
                 type="button"
-                onclick="agregarAlCarrito('${producto.nombre}')"
+                onclick="agregarAlCarrito('${producto._id}')"
             >
                 Agregar al carrito
             </button>
@@ -123,13 +136,10 @@ function renderizarProductos() {
 }
 
 
-// Iniciar la carga de productos
-cargarProductos();
 
 
-/* =========================
-   NAVBAR
-========================= */
+
+//funcion que crea el navbar en el html para todas las paginas
 
 function crearNavbar() {
 
@@ -162,7 +172,7 @@ function crearNavbar() {
             </button>
 
             <button
-                onclick="window.location.href='login.html'"
+                onclick="window.location.href='perfil.html'"
                 class="nav-button"
             >
                 👤
@@ -173,9 +183,7 @@ function crearNavbar() {
 }
 
 
-/* =========================
-   FOOTER
-========================= */
+//funcion que crea el footer en todas las paginas
 
 function crearFooter() {
 
@@ -207,7 +215,8 @@ function crearFooter() {
 
                     <a href="menu.html">Menú</a>
 
-                    <a href="contacto.html">Reservas</a>
+                    <a href="contacto.html">Contacto y reservas</a>
+
 
                 </div>
 
@@ -241,9 +250,176 @@ function crearFooter() {
 }
 
 
-/* =========================
-   FECHA DE RESERVA
-========================= */
+//crea tarjetas que muestran pedidos pasados para la pagina mispedidos
+function tarjetaPedido(pedidos) {
+    const contenedor = document.getElementById("mispedidos");
+    if (!contenedor) return;
+
+    // Si el usuario no tiene pedidos
+    if (pedidos.length === 0) {
+        contenedor.innerHTML = `
+            <main class="mis-pedidos">
+                <section class="mispedidos-header">
+                    <h1>Mis pedidos</h1>
+                    <p>Revisa el historial de tus pedidos.</p>
+                </section>
+
+                <p>Aún no tienes pedidos realizados.</p>
+            </main>
+        `;
+        return;
+    }
+
+    // crea una tarjeta por cada pedido
+    const tarjetas = pedidos.map(pedido => {
+
+        const fecha = new Date(pedido.fecha).toLocaleDateString("es-CL");
+
+        const total = Number(pedido.total).toLocaleString("es-CL", {
+            style: "currency",
+            currency: "CLP",
+            maximumFractionDigits: 0
+        });
+
+        // crea el HTML para cada producto del pedido
+        const productosHTML = pedido.productos.map(producto => {
+            const precio = Number(producto.precio).toLocaleString("es-CL", {
+                style: "currency",
+                currency: "CLP",
+                maximumFractionDigits: 0
+            });
+
+            return `
+                <div class="producto-pedido">
+                    <p>${producto.nombre}</p>
+                    <p>Cantidad: ${producto.cantidad}</p>
+                    <p>Precio unitario: ${precio}</p>
+                </div>
+            `;
+        }).join("");
+
+        return `
+            <article class="pedido-card">
+
+                <div>
+                    <p>Pedido #${pedido._id}</p>
+                    <p>Fecha: ${fecha}</p>
+                </div>
+
+                <div>
+                    <p><strong>Productos:</strong></p>
+                    ${productosHTML}
+                </div>
+
+                <div>
+                    <p>Comentarios: ${pedido.observacion || "Sin comentarios"}</p>
+                </div>
+
+                <div>
+                    <p>Total: ${total}</p>
+                    <p>Estado: ${pedido.estado}</p>
+                </div>
+
+                <div>
+                    <p>Dirección: ${pedido.direccion || "No especificada"}</p>
+
+
+                </div>
+
+                <button
+                    type="button"
+                    id="cancelar-pedido"
+                    data-id="${pedido._id}"
+                >
+                    Solicitar anulación
+                </button>
+
+            </article>
+        `;
+    }).join("");
+
+    // Insertar todas las tarjetas en el HTML 
+    contenedor.innerHTML = `
+        <main class="mis-pedidos">
+
+            <section class="mispedidos-header">
+                <h1>Mis pedidos</h1>
+                <p>Revisa el historial de tus pedidos.</p>
+            </section>
+
+            <section class="lista-pedidos">
+                ${tarjetas}
+            </section>
+
+        </main>
+    `;
+}
+//listener para el oton de cancelar pedido llamam a la funcion que solicita una anulacion en usuarios.js
+document.addEventListener("click", function(event) {
+    const boton = event.target.closest("#cancelar-pedido");
+
+    if (boton) {
+        const pedidoId = boton.dataset.id;
+        solicitarAnulacion(pedidoId);
+    }
+});
+
+
+//muestra un detalle del pedido antes de confirmarlo y proceder a pagar
+function mostrarPedido(usuario, carrito) {
+    const contenedor = document.getElementById("contenidoPedido");
+    if (!contenedor) return;
+
+    // Genera el HTML para los productos del carrito
+    const productosHTML = carrito.map(producto => {
+        const subtotal = producto.precio * producto.cantidad;
+
+        return `
+            <div class="pedido-producto">
+                <span>${producto.nombre} x${producto.cantidad}</span>
+                <span>${formatoPrecio(subtotal)}</span>
+            </div>
+        `;
+    }).join("");
+
+    // calcula el total
+    const total = carrito.reduce((suma, producto) => {
+        return suma + producto.precio * producto.cantidad;
+    }, 0);
+
+    // muestra datos del usuario y productos
+    contenedor.innerHTML = `
+        <div class="pedido-datos">
+            <h2>Datos de entrega</h2>
+            <p><strong>Nombre:</strong> ${usuario.nombre}</p>
+            <p><strong>Dirección:</strong> ${usuario.direccion}</p>
+            <p><strong>Comuna:</strong> ${usuario.comuna}</p>
+            <p><strong>Provincia:</strong> ${usuario.provincia}</p>
+            <p><strong>Región:</strong> ${usuario.region}</p>
+            <p><strong>Teléfono:</strong> ${usuario.numero}</p>
+            <a href="perfil.html">Modificar datos</a>
+        </div>
+
+        <div class="pedido-productos">
+            <h2>Productos</h2>
+            ${productosHTML}
+            <hr>
+            <div class="pedido-total">
+                <strong>Total</strong>
+                <strong>${formatoPrecio(total)}</strong>
+            </div>
+        </div>
+
+        <div class="pedido-pago">
+            <h2>Confirmar pedido</h2>
+            <button type="button" id="confirmarPedido">
+                Confirmar pedido
+            </button>
+        </div>
+    `;
+}
+
+//funcion para reservas
 
 const fecha = document.getElementById("fecha");
 
@@ -279,9 +455,8 @@ if (fecha) {
 }
 
 
-/* =========================
-   INICIALIZAR
-========================= */
 
 crearNavbar();
 crearFooter();
+tarjetaPedido();
+document.addEventListener("DOMContentLoaded", cargarProductos);

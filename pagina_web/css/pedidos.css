@@ -1,15 +1,4 @@
 /* =====================================================
-   PEDIDOS
-   ===================================================== */
-
-.pedido,
-.mispedidos,
-.pedido-detalle {
-    width: 100%;
-    padding: 60px 8%;
-}
-
-/* =====================================================
    ENCABEZADOS
    ===================================================== */
 
@@ -40,13 +29,23 @@
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 30px;
+    
 }
 
 .pedido-datos,
 .pedido-productos,
 .pedido-pago {
     padding: 30px;
-    background-color: var(--porcelain);
+    background-color: var(--soft-linen);
+}
+
+.pedido-datos {
+    margin-left: 30px;
+}
+
+.pedido-productos {
+    margin-right: 100px;
+    margin-left: 30px;
 }
 
 .pedido-datos h2,
@@ -119,103 +118,28 @@
     align-items: center;
     gap: 30px;
     padding: 25px;
-    background-color: var(--porcelain);
+    background-color: var(--pale-oak);
 }
 
-.pedido-card h2 {
-    font-size: 1.3rem;
-    color: var(--pine-teal);
-    margin-bottom: 8px;
+.mis-pedidos{
+    width: 100%;
+    padding: 60px 8%;
 }
 
-.pedido-card p {
-    margin: 5px 0;
-}
-
-.pedido-card a {
-    padding: 10px 18px;
+#cancelar-pedido {
     background-color: var(--dark-wine);
-    color: var(--porcelain);
-    text-decoration: none;
-    text-align: center;
+    color: var(--soft-linen);
+    padding: 8px 14px;
+    font-size: 14px;
+    font-weight: 600;
+    margin-top: 12px;
 }
 
-.pedido-card a:hover {
-    background-color: var(--brown-red);
-}
+
+
 
 /* =====================================================
-   DETALLE DEL PEDIDO
-   ===================================================== */
-
-.detalle-contenido {
-    display: grid;
-    grid-template-columns: 2fr 1fr;
-    gap: 30px;
-}
-
-.detalle-productos,
-.detalle-entrega {
-    padding: 30px;
-    background-color: var(--porcelain);
-}
-
-.detalle-productos h2,
-.detalle-entrega h2 {
-    color: var(--pine-teal);
-    margin-bottom: 25px;
-}
-
-.detalle-producto {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 15px 0;
-    border-bottom: 1px solid var(--pale-oak);
-}
-
-.detalle-producto h3 {
-    font-size: 1.1rem;
-    margin-bottom: 5px;
-}
-
-.detalle-producto p {
-    margin: 0;
-}
-
-.detalle-total {
-    display: flex;
-    justify-content: space-between;
-    font-size: 1.2rem;
-}
-
-.detalle-entrega p {
-    margin-bottom: 12px;
-}
-
-.detalle-acciones {
-    grid-column: 1 / -1;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 20px;
-}
-
-.detalle-acciones a {
-    color: var(--dark-wine);
-    text-decoration: none;
-}
-
-.detalle-acciones button {
-    padding: 12px 25px;
-    border: none;
-    background-color: var(--dark-wine);
-    color: var(--porcelain);
-    cursor: pointer;
-}
-
-/* =====================================================
-   TELÉFONO
+   TELÉFONO 
    ===================================================== */
 
 @media (max-width: 700px) {

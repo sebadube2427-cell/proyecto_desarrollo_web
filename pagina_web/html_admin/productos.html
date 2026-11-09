@@ -1,0 +1,503 @@
+
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Administrar productos</title>
+
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+    >
+
+    <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css"
+    >
+
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/admin.css">
+</head>
+
+<body>
+
+    <!-- Navbar administrativo -->
+        <div id="admin_navbar"></div>
+
+
+    <main class="container py-5">
+
+        <!-- Encabezado -->
+        <div class="d-flex flex-wrap justify-content-between align-items-center mb-4 gap-3">
+
+            <div>
+                <h2 class="mb-1">Administrar productos</h2>
+                <p class="text-muted mb-0">
+                    Modifica los precios y la disponibilidad de tus productos.
+                </p>
+            </div>
+
+            <button class="btn btn-outline-secondary" id="btn_recargar">
+                <i class="bi bi-arrow-clockwise me-2"></i>
+                Actualizar productos
+            </button>
+
+        </div>
+
+
+        <!-- Mensaje de carga -->
+        <div id="mensaje_carga" class="text-center py-5">
+            <div class="spinner-border text-danger" role="status"></div>
+            <p class="mt-3 text-muted">Cargando productos...</p>
+        </div>
+
+
+        <!-- Mensaje de error -->
+        <div id="mensaje_error" class="alert alert-danger d-none" role="alert">
+        </div>
+
+
+        <!-- Contenedor de productos -->
+        <div id="contenedor_productos" class="row g-4">
+        </div>
+
+
+        <!-- Mensaje cuando no existen productos -->
+        <div id="mensaje_vacio" class="alert alert-info text-center d-none">
+            No hay productos registrados.
+        </div>
+
+    </main>
+
+
+    <!-- Plantilla de tarjeta de producto -->
+    <template id="plantilla_producto">
+
+        <div class="col-12 col-sm-6 col-lg-4 col-xl-3">
+
+            <div class="card h-100 shadow-sm producto-card">
+
+                <img
+                    class="card-img-top producto-imagen"
+                    alt="Imagen del producto"
+                    style="height: 190px; object-fit: cover;"
+                >
+
+                <div class="card-body d-flex flex-column">
+
+                    <h5 class="card-title producto-nombre"></h5>
+
+                    <p class="text-muted small mb-2 producto-categoria"></p>
+
+                    <h4 class="producto-precio mb-3"></h4>
+
+                    <div class="mb-3">
+                        <span class="badge producto-disponibilidad"></span>
+                    </div>
+
+                    <button
+                        type="button"
+                        class="btn btn-outline-danger mt-auto btn-modificar"
+                        data-bs-toggle="modal"
+                        data-bs-target="#modalModificar"
+                    >
+                        <i class="bi bi-pencil-square me-2"></i>
+                        Modificar
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </template>
+
+
+    <!-- Modal para modificar producto -->
+    <div
+        class="modal fade"
+        id="modalModificar"
+        tabindex="-1"
+        aria-labelledby="tituloModal"
+        aria-hidden="true"
+    >
+
+        <div class="modal-dialog modal-dialog-centered">
+
+            <div class="modal-content">
+
+                <div class="modal-header">
+
+                    <h5 class="modal-title" id="tituloModal">
+                        Modificar producto
+                    </h5>
+
+                    <button
+                        type="button"
+                        class="btn-close"
+                        data-bs-dismiss="modal"
+                        aria-label="Cerrar"
+                    ></button>
+
+                </div>
+
+
+                <div class="modal-body">
+
+                    <form id="form_modificar">
+
+                        <input type="hidden" id="producto_id">
+
+                        <!-- Nombre del producto -->
+                        <div class="mb-3">
+                            <label class="form-label">
+                                Producto
+                            </label>
+
+                            <input
+                                type="text"
+                                class="form-control"
+                                id="producto_nombre"
+                                disabled
+                            >
+                        </div>
+
+
+                        <!-- Precio -->
+                        <div class="mb-3">
+
+                            <label for="producto_precio" class="form-label">
+                                Precio (CLP)
+                            </label>
+
+                            <input
+                                type="number"
+                                class="form-control"
+                                id="producto_precio"
+                                min="1"
+                                step="1"
+                                required
+                            >
+
+                        </div>
+
+
+                        <!-- Disponibilidad -->
+                        <div class="mb-3">
+
+                            <label class="form-label">
+                                Disponibilidad
+                            </label>
+
+                            <select
+                                class="form-select"
+                                id="producto_disponible"
+                                required
+                            >
+                                <option value="true">Disponible</option>
+                                <option value="false">No disponible</option>
+                            </select>
+
+                        </div>
+
+                        <div id="error_modificacion" class="alert alert-danger d-none">
+                        </div>
+
+                    </form>
+
+                </div>
+
+
+                <div class="modal-footer">
+
+                    <button
+                        type="button"
+                        class="btn btn-secondary"
+                        data-bs-dismiss="modal"
+                    >
+                        Cancelar
+                    </button>
+
+                    <button
+                        type="submit"
+                        form="form_modificar"
+                        class="btn btn-success"
+                        id="btn_guardar"
+                    >
+                        <i class="bi bi-check-circle me-2"></i>
+                        Guardar cambios
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- Bootstrap -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Funciones administrativas generales -->
+    <script src="../js/admin/admin.js"></script>
+
+
+    <!-- Lógica exclusiva de esta página -->
+    <script>
+
+        const API_URL_PRODUCTOS = "http://127.0.0.1:8000/api";
+
+        const contenedorProductos = document.getElementById("contenedor_productos");
+        const plantillaProducto = document.getElementById("plantilla_producto");
+
+        const mensajeCarga = document.getElementById("mensaje_carga");
+        const mensajeError = document.getElementById("mensaje_error");
+        const mensajeVacio = document.getElementById("mensaje_vacio");
+
+        const modalModificar = bootstrap.Modal.getOrCreateInstance(
+            document.getElementById("modalModificar")
+        );
+
+
+        // Formatear precio en pesos chilenos
+        function formatearPrecio(precio) {
+
+            return new Intl.NumberFormat("es-CL", {
+                style: "currency",
+                currency: "CLP",
+                maximumFractionDigits: 0
+            }).format(precio);
+
+        }
+
+
+        // Consultar productos al backend
+        async function cargarProductos() {
+
+            mensajeCarga.classList.remove("d-none");
+            mensajeError.classList.add("d-none");
+            mensajeVacio.classList.add("d-none");
+
+            contenedorProductos.innerHTML = "";
+
+            try {
+
+                const respuesta = await fetch(
+                    `${API_URL_PRODUCTOS}/products`,
+                    {
+                        method: "GET",
+                        credentials: "include"
+                    }
+                );
+
+                if (respuesta.status === 401 || respuesta.status === 403) {
+                    sessionStorage.clear();
+                    window.location.replace("../html/login.html");
+                    return;
+                }
+
+                if (!respuesta.ok) {
+                    throw new Error("No fue posible obtener los productos.");
+                }
+
+                const productos = await respuesta.json();
+
+                if (productos.length === 0) {
+                    mensajeVacio.classList.remove("d-none");
+                    return;
+                }
+
+                productos.forEach(producto => {
+
+                    const tarjeta = plantillaProducto.content.cloneNode(true);
+
+                    const imagen = tarjeta.querySelector(".producto-imagen");
+                    const nombre = tarjeta.querySelector(".producto-nombre");
+                    const categoria = tarjeta.querySelector(".producto-categoria");
+                    const precio = tarjeta.querySelector(".producto-precio");
+                    const disponibilidad = tarjeta.querySelector(".producto-disponibilidad");
+                    const botonModificar = tarjeta.querySelector(".btn-modificar");
+
+                    // Información del producto
+                    imagen.src = producto.imagen || "";
+                    imagen.alt = producto.nombre;
+
+                    imagen.onerror = function () {
+                        this.style.display = "none";
+                    };
+
+                    nombre.textContent = producto.nombre;
+                    categoria.textContent = producto.categoria;
+                    precio.textContent = formatearPrecio(producto.precio);
+
+                    // Disponibilidad
+                    if (producto.disponible) {
+
+                        disponibilidad.textContent = "Disponible";
+                        disponibilidad.classList.add("bg-success");
+
+                    } else {
+
+                        disponibilidad.textContent = "No disponible";
+                        disponibilidad.classList.add("bg-secondary");
+
+                    }
+
+                    // Asociar producto al botón
+                    botonModificar.addEventListener("click", () => {
+                        abrirModalModificar(producto);
+                    });
+
+                    contenedorProductos.appendChild(tarjeta);
+
+                });
+
+            } catch (error) {
+
+                console.error("Error cargando productos:", error);
+
+                mensajeError.textContent = error.message;
+                mensajeError.classList.remove("d-none");
+
+            } finally {
+
+                mensajeCarga.classList.add("d-none");
+
+            }
+
+        }
+
+
+        // Abrir modal con información del producto
+        function abrirModalModificar(producto) {
+
+            document.getElementById("producto_id").value = producto._id;
+
+            document.getElementById("producto_nombre").value = producto.nombre;
+
+            document.getElementById("producto_precio").value = producto.precio;
+
+            document.getElementById("producto_disponible").value =
+                String(producto.disponible);
+
+            document.getElementById("error_modificacion").classList.add("d-none");
+
+            modalModificar.show();
+
+        }
+
+
+        // Enviar modificaciones al backend
+        document.getElementById("form_modificar").addEventListener("submit", async function (event) {
+
+            event.preventDefault();
+
+            const productoId = document.getElementById("producto_id").value;
+
+            const precio = Number(document.getElementById("producto_precio").value);
+
+            const disponible = document.getElementById("producto_disponible").value === "true";
+
+            const botonGuardar = document.getElementById("btn_guardar");
+
+            const errorModificacion = document.getElementById("error_modificacion");
+
+            if (!Number.isFinite(precio) || precio <= 0) {
+
+                errorModificacion.textContent = "El precio debe ser mayor que cero.";
+                errorModificacion.classList.remove("d-none");
+
+                return;
+
+            }
+
+            const cambios = {
+                precio: precio,
+                disponible: disponible
+            };
+
+            try {
+
+                botonGuardar.disabled = true;
+
+                botonGuardar.innerHTML = `
+                    <span class="spinner-border spinner-border-sm me-2"></span>
+                    Guardando...
+                `;
+
+                errorModificacion.classList.add("d-none");
+
+                const respuesta = await fetch(
+                    `${API_URL_PRODUCTOS}/admin/products/${productoId}`,
+                    {
+                        method: "PATCH",
+                        credentials: "include",
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify(cambios)
+                    }
+                );
+
+                const resultado = await respuesta.json();
+
+                if (respuesta.status === 401 || respuesta.status === 403) {
+                    sessionStorage.clear();
+                    window.location.replace("../html/login.html");
+                    return;
+                }
+
+                if (!respuesta.ok) {
+                    throw new Error(
+                        resultado.detail || "No se pudieron guardar los cambios."
+                    );
+                }
+
+                // Cerrar modal
+                modalModificar.hide();
+
+                // Volver a consultar productos para mostrar los datos actualizados
+                await cargarProductos();
+
+                alert("Producto actualizado correctamente.");
+
+            } catch (error) {
+
+                console.error("Error modificando producto:", error);
+
+                errorModificacion.textContent = error.message;
+                errorModificacion.classList.remove("d-none");
+
+            } finally {
+
+                botonGuardar.disabled = false;
+
+                botonGuardar.innerHTML = `
+                    <i class="bi bi-check-circle me-2"></i>
+                    Guardar cambios
+                `;
+
+            }
+
+        });
+
+
+        // Botón para recargar productos
+        document.getElementById("btn_recargar").addEventListener("click", cargarProductos);
+
+
+        // Carga inicial
+        cargarProductos();
+
+    </script>
+        <script src="../js/usuario.js"></script>
+        <script src="../js/admin.js"></script>
+</body>
+
+</html>

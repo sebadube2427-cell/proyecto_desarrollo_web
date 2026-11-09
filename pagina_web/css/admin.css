@@ -1,0 +1,151 @@
+
+/* ==========================================
+   NAVBAR ADMINISTRATIVO
+========================================== */
+
+.navbar-admin {
+    background-color: var(--dark-wine);
+    padding: 12px 20px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.navbar-admin .navbar-brand {
+    color: var(--porcelain);
+    font-weight: 700;
+}
+
+.navbar-admin .navbar-brand:hover {
+    color: var(--soft-linen);
+}
+
+.navbar-admin .nav-link {
+    color: var(--soft-linen);
+    font-weight: 500;
+    font-size: 16px;
+    padding: 8px 15px;
+    border-radius: 6px;
+    transition: background-color 0.2s ease;
+    white-space: nowrap;
+}
+
+.navbar-admin .nav-link:hover {
+    background-color: var(--brown-red);
+    color: var(--porcelain);
+}
+
+.navbar-admin .nav-link.active {
+    background-color: rgba(255, 255, 255, 0.2);
+    color: var(--porcelain);
+    font-weight: 600;
+}
+
+.navbar-admin .navbar-toggler {
+    border-color: rgba(255, 255, 255, 0.5);
+}
+
+.navbar-admin .navbar-toggler:focus {
+    box-shadow: 0 0 0 0.15rem rgba(255, 255, 255, 0.25);
+}
+
+.dashboard-link {
+    margin-right: auto;
+}
+
+.admin-nav-center {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+
+/* ==========================================
+   TARJETAS DEL DASHBOARD
+========================================== */
+
+
+/* ==========================================
+   DASHBOARD
+========================================== */
+
+
+/* ==========================================
+   DASHBOARD
+========================================== */
+
+#dashboard_resumen {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: calc(100vh - 80px);
+    padding: 40px 25px;
+}
+
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(300px, 400px));
+    gap: 30px;
+    width: 100%;
+    max-width: 850px;
+}
+
+.dashboard-card {
+    border: none;
+    border-radius: 14px;
+    background-color: var(--porcelain);
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.07);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    min-height: 190px;
+    display: flex;
+    justify-content: center;
+}
+
+.dashboard-card .card-body {
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.dashboard-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+}
+
+.dashboard-card-title {
+    color: var(--granite);
+    font-size: 17px;
+    font-weight: 600;
+    margin-bottom: 15px;
+}
+
+.dashboard-icon {
+    font-size: 28px;
+    color: var(--brown-red);
+}
+
+.dashboard-value {
+    color: var(--dark-wine);
+    font-size: 34px;
+    font-weight: 700;
+    margin-bottom: 8px;
+}
+
+/* Pantallas pequeñas */
+
+@media (max-width: 700px) {
+    #dashboard_resumen {
+        min-height: auto;
+        padding: 30px 20px;
+    }
+
+    .dashboard-grid {
+        grid-template-columns: minmax(0, 400px);
+        justify-content: center;
+        gap: 20px;
+    }
+
+    .dashboard-card {
+        min-height: 160px;
+    }
+}
+
