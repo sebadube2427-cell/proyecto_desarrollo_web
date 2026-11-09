@@ -547,3 +547,6 @@ curl.exe -X GET "http://127.0.0.1:8000/api/admin/orders" -b admin.txt
 Artificial ChatGPT para facilitar comandos y una guía clara y
 estructurada de cómo ejecutar cada servicio del proyecto. La información
 fue revisada directamente por mí, se lo juro profe.
+
+<img width="752" height="407" alt="diagrama" src="https://github.com/user-attachments/assets/66e04dd5-1990-4d04-815e-8e818ac8296e" />
+
