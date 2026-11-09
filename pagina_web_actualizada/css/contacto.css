@@ -1,0 +1,155 @@
+/* =====================================================
+   CONTACTO
+   ===================================================== */
+
+.contacto {
+    width: 100%;
+    padding: 60px 8%;
+}
+
+
+/* =====================================================
+   HEADER
+   ===================================================== */
+
+.contacto-header {
+    max-width: 800px;
+    margin: 0 auto 50px;
+    text-align: center;
+}
+
+.contacto-header h1 {
+    font-size: 3rem;
+    color: var(--pine-teal);
+    margin-bottom: 20px;
+}
+
+.contacto-header p {
+    font-size: 1.1rem;
+}
+
+
+/* =====================================================
+   CONTENIDO
+   ===================================================== */
+
+.contacto-contenido {
+    display: grid;
+    grid-template-columns: 1fr 1.5fr;
+    gap: 60px;
+    max-width: 1100px;
+    margin: auto;
+}
+
+
+/* =====================================================
+   INFORMACIÓN
+   ===================================================== */
+
+.contacto-info h2 {
+    font-size: 2rem;
+    color: var(--pine-teal);
+    margin-bottom: 20px;
+}
+
+.contacto-info p {
+    margin-bottom: 30px;
+}
+
+.info-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 18px;
+}
+
+.info-item i {
+    font-size: 1.3rem;
+    color: var(--dark-wine);
+}
+
+
+/* =====================================================
+   FORMULARIO
+   ===================================================== */
+
+.contacto-form {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.campo {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+}
+
+.campo label {
+    font-weight: bold;
+}
+
+.campo input,
+.campo select,
+.campo textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid var(--pale-oak);
+    background-color: var(--porcelain);
+    font-family: inherit;
+}
+
+.campo textarea {
+    resize: vertical;
+}
+
+.campo-completo {
+    grid-column: 1 / -1;
+}
+
+.contacto-boton {
+    grid-column: 1 / -1;
+
+    padding: 13px;
+    border: none;
+
+    background-color: var(--dark-wine);
+    color: var(--porcelain);
+
+    cursor: pointer;
+}
+
+.contacto-boton:hover {
+    background-color: var(--brown-red);
+}
+
+
+/* =====================================================
+   RESPONSIVE
+   ===================================================== */
+
+@media (max-width: 700px) {
+
+    .contacto {
+        padding: 40px 5%;
+    }
+
+    .contacto-header h1 {
+        font-size: 2.2rem;
+    }
+
+    .contacto-contenido {
+        grid-template-columns: 1fr;
+        gap: 40px;
+    }
+
+    .contacto-form {
+        grid-template-columns: 1fr;
+    }
+
+    .campo-completo,
+    .contacto-boton {
+        grid-column: auto;
+    }
+
+}

@@ -1,0 +1,182 @@
+/* =====================================================
+   ENCABEZADOS
+   ===================================================== */
+
+.pedido-header,
+.mispedidos-header,
+.detalle-header {
+    margin-bottom: 40px;
+}
+
+.pedido-header h1,
+.mispedidos-header h1,
+.detalle-header h1 {
+    font-size: 3rem;
+    color: var(--pine-teal);
+    margin-bottom: 10px;
+}
+
+.pedido-header p,
+.mispedidos-header p {
+    margin: 0;
+}
+
+/* =====================================================
+   PEDIDO
+   ===================================================== */
+
+.pedido-contenido {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+    
+}
+
+.pedido-datos,
+.pedido-productos,
+.pedido-pago {
+    padding: 30px;
+    background-color: var(--soft-linen);
+}
+
+.pedido-datos {
+    margin-left: 30px;
+}
+
+.pedido-productos {
+    margin-right: 100px;
+    margin-left: 30px;
+}
+
+.pedido-datos h2,
+.pedido-productos h2,
+.pedido-pago h2 {
+    color: var(--pine-teal);
+    margin-bottom: 25px;
+}
+
+.pedido-datos p {
+    margin-bottom: 10px;
+}
+
+.pedido-datos a {
+    color: var(--dark-wine);
+    text-decoration: none;
+}
+
+.pedido-producto {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15px;
+}
+
+.pedido-total {
+    display: flex;
+    justify-content: space-between;
+    font-size: 1.2rem;
+}
+
+.pedido-pago {
+    grid-column: 1 / -1;
+}
+
+.pedido-pago select {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 20px;
+    border: 1px solid var(--pale-oak);
+    background-color: var(--porcelain);
+}
+
+.pedido-pago button {
+    width: 100%;
+    padding: 13px;
+    border: none;
+    background-color: var(--dark-wine);
+    color: var(--porcelain);
+    cursor: pointer;
+}
+
+.pedido-pago button:hover,
+.detalle-acciones button:hover {
+    background-color: var(--brown-red);
+}
+
+/* =====================================================
+   MIS PEDIDOS
+   ===================================================== */
+
+.lista-pedidos {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.pedido-card {
+    display: grid;
+    grid-template-columns: 1fr 1fr auto;
+    align-items: center;
+    gap: 30px;
+    padding: 25px;
+    background-color: var(--pale-oak);
+}
+
+.mis-pedidos{
+    width: 100%;
+    padding: 60px 8%;
+}
+
+#cancelar-pedido {
+    background-color: var(--dark-wine);
+    color: var(--soft-linen);
+    padding: 8px 14px;
+    font-size: 14px;
+    font-weight: 600;
+    margin-top: 12px;
+}
+
+
+
+
+/* =====================================================
+   TELÉFONO 
+   ===================================================== */
+
+@media (max-width: 700px) {
+
+    .pedido,
+    .mispedidos,
+    .pedido-detalle {
+        padding: 40px 5%;
+    }
+
+    .pedido-header h1,
+    .mispedidos-header h1,
+    .detalle-header h1 {
+        font-size: 2.2rem;
+    }
+
+    .pedido-contenido,
+    .detalle-contenido {
+        grid-template-columns: 1fr;
+    }
+
+    .pedido-pago,
+    .detalle-acciones {
+        grid-column: auto;
+    }
+
+    .pedido-card {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+
+    .detalle-acciones {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .detalle-acciones a {
+        text-align: center;
+    }
+}
